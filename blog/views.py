@@ -8,14 +8,19 @@ from .models import Blog
 from .serializers import BlogSerializer, ReportUserSerializer
 from authentication.models import User
 from rest_framework import generics
-
+from django.shortcuts import render
+import requests
+from .pagination import ConditionalPagination
 BLACKLIST_THRESHOLD = 3
+
+
 
 class BlogListAPIView(ListCreateAPIView):
     serializer_class = BlogSerializer
     queryset = Blog.objects.all()
     permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
+    pagination_class = ConditionalPagination
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -55,3 +60,7 @@ class ReportUserAPIView(generics.GenericAPIView):
 
         except User.DoesNotExist:
             return Response({"error": "User not found."}, status=404)
+        
+def blogListView(request):
+    blogs = Blog.objects.all()
+    return render(request, 'blog/blog_list.html', {'blogs':blogs})

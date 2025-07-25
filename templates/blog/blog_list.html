@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>All Blogs</title>
+    <style>
+        body {
+            background-color: white;
+            color: black;
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        .blog {
+            border-bottom: 1px solid #ccc;
+            padding: 15px 0;
+        }
+        .blog h2 {
+            margin: 0 0 5px 0;
+        }
+        .meta {
+            font-size: 0.9em;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Blogs</h1>
+
+    {% for blog in blogs %}
+        <div class="blog">
+            <h2>{{ blog.title }}</h2>
+            <p class="meta">
+                By: {{ blog.author.username }} |
+                Created at: {{ blog.created_at|date:"F j, Y, g:i a" }} |
+                Updated at: {{ blog.updated_at|date:"F j, Y, g:i a" }}
+            </p>
+            <p>{{ blog.content }}</p>
+            {% if blog.images %}
+                <img src="{{ blog.images.url }}" alt="Image for {{ blog.title }}" width="320" height="210">
+            {% else %}
+                <p>No image added</p>
+            {% endif %}
+            
+            {% if blog.videos %}
+                <video width="320" height="240" controls>
+                <source src="{{ blog.videos.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+                </video>
+            {% else %}
+                <p>No video added</p>
+            {% endif %}
+
+        </div>
+    {% empty %}
+        <p>No blogs found.</p>
+    {% endfor %}
+
+</body>
+</html>
