@@ -11,6 +11,8 @@ from .utils import Util
 
 
 
+class DummySerializer(serializers.Serializer):
+    pass
 
 
 class RegisterSerializer(serializers.ModelSerializer):

@@ -1,5 +1,5 @@
 from rest_framework import generics, status, views
-from .serializers import RegisterSerializer, EmailVerificationSerializer, LoginSerializer, RequestPasswordResetEmailSerializer, SetNewPasswordSerializer
+from .serializers import RegisterSerializer, EmailVerificationSerializer, LoginSerializer, RequestPasswordResetEmailSerializer, SetNewPasswordSerializer, DummySerializer
 from rest_framework.response import Response
 from django.shortcuts import render
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -113,6 +113,7 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
     
 
 class PasswordTokenCheckAPI(generics.GenericAPIView):
+    serializer_class = DummySerializer
     def get(self, request, uidb64, token):
         try:
             id = smart_str(urlsafe_base64_decode(uidb64))

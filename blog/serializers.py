@@ -6,7 +6,7 @@ class BlogSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
     class Meta:
         model = Blog
-        fields = ['title', 'content', 'images', 'videos', 'author', 'created_at', 'updated_at']
+        fields = ['id', 'title', 'content', 'images', 'videos', 'author', 'created_at', 'updated_at']
 
 
 class ReportUserSerializer(serializers.Serializer):
